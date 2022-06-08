@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="author" content="MORVAN Pierre"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="./vendor/reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="./css/slides.css" id="theme"/>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<div class="page-title"><h1 id="title" style="width: 900px">Comment éviter des situations cocasses avec un travail d'architecture et de developpement sécurisé</h1><h2>MORVAN Pierre</h2></div>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<link href="css/slides.css" rel="stylesheet">
+<title>Comment éviter des situations cocasses avec un travail d'architecture et de developpement sécurisé</title>
+
+<div class="header-tf"><div id="label-container" style="text-align:center"></div></div>
+<script src="vendor/tfjs.js"></script>
+<script src="vendor/speech-commands.js"></script>
+<script src="vendor/tf-backend-wasm.js"></script>
+<script src="js/ml.js"></script>
+
+<section>
+<section id="slide-org8f2447d">
+<h2 id="org8f2447d">WHO AM I?</h2>
+
+<div id="orgd739d15" class="figure">
+<p><img src="./assets/pierre_znk.png" alt="pierre_znk.png" style="border-radius: 50%; margin: auto; display: block;" />
+</p>
+</div>
+<p style="text-align: center">
+Pierre Morvan @Zenika Paris
+</p>
+<p style="text-align: center">
+@ryarnyah
+</p>
+<p style="text-align: center">
+"Du Java mais pas que&#x2026;"
+</p>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+</section>
+<section>
+<section id="slide-orgb5c1e43">
+<h2 id="orgb5c1e43">ENCORE DES MICRO-SERVICES?!?</h2>
+
+<div id="org430e72a" class="figure">
+<p><object type="image/svg+xml" data="./assets/diagram-spring-cloud.svg" class="org-svg" style="margin: auto; display: block; width: 40%;">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+<div id="orgcb860ce" class="figure">
+<p><img src="./assets/ingress-k8s.png" alt="ingress-k8s.png" style="margin: auto; display: block; width: 40%;" />
+</p>
+</div>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-org0d92b8a">
+<h3 id="org0d92b8a">SSRF OU COMMENT OUVRIR LA PORTE DE SON SI</h3>
+<p>
+SSR&#x2026; Quoi?
+</p>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-org6cd8273">
+<h3 id="org6cd8273">CHIFFRER SES FLUX? POURQUOI?</h3>
+
+<div id="org4dec950" class="figure">
+<p><object type="image/svg+xml" data="./assets/service-mesh.svg" class="org-svg" style="margin: auto; display: block; width: 80%;">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-orga23fc93">
+<h3 id="orga23fc93">TLS? POURQUOI?</h3>
+<ul>
+<li>Interception réseau
+<ul>
+<li>Récupération de secrets (LDAP, accès DB, &#x2026;)</li>
+<li>Réécriture des réponses</li>
+<li>&#x2026;</li>
+
+</ul></li>
+<li>ARP spoofing</li>
+<li>&#x2026;</li>
+
+</ul>
+<aside class="notes">
+<p>
+tout flux doit être chiffré.
+Ne pas oublier de gérer des CRLs ou un répondeur OCSP
+</p>
+
+</aside>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-orgcf43dd8">
+<h3 id="orgcf43dd8">Limiter au maximum les droits d'un process</h3>
+<ul>
+<li>Containers (SystemD sait aussi faire des containers!)</li>
+<li>Capabilities</li>
+<li>Users unix</li>
+<li>&#x2026;</li>
+
+</ul>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-org89768fd">
+<h3 id="org89768fd">N'OUBLIONS PAS LE DNS</h3>
+<ul>
+<li>Ordre de résolution du DNS</li>
+<li>DNS de fallback</li>
+
+</ul>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+</section>
+<section>
+<section id="slide-org5b5c12d">
+<h2 id="org5b5c12d">DEPENDENCY HELL</h2>
+
+<div id="org22233fc" class="figure">
+<p><object type="image/svg+xml" data="./assets/dep-hell.svg" class="org-svg" style="margin: auto; display: block; width: 95%;">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<aside class="notes">
+<p>
+Story telling:
+Je vais vous raconter une histoire.
+Qui n'a jamais eu de dépendances en double dans son projet?
+Qui n'a jamais eu de ClassCastException ou de MethodNotFoundException?
+</p>
+
+<p>
+Le module analysé c'est quarkus-neo4j au milleu.
+</p>
+
+</aside>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-org2466fed">
+<h3 id="org2466fed">DEPENDENCY HELL</h3>
+
+<div id="orgc54a47e" class="figure">
+<p><img src="./assets/quarkus-extensions.png" alt="quarkus-extensions.png" style="margin: auto; display: block; width: 70%;" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Framework mis en avant pour l'écriture de nouveaux modules.
+</p>
+
+</aside>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-orgebfec86">
+<h3 id="orgebfec86">DEPENDENCY HELL: COMMENT S'EN SORTIR?</h3>
+
+<div id="orgb5295c2" class="figure">
+<p><object type="image/svg+xml" data="./assets/Questions-pana.svg" class="questions">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-orgf55bd36">
+<h3 id="orgf55bd36">DEPENDENCY HELL: DES OUTILS EN JAVA</h3>
+<ul>
+<li class="fragment appear">Des incontournables avec maven incontournables
+<ul>
+<li>Maven Enforcer Plugin</li>
+<li>Maven Dependency Check</li>
+
+</ul></li>
+<li class="fragment appear">Des scans réguliers</li>
+<li class="fragment appear">Mais c'est aussi une éducation des équipe</li>
+
+</ul>
+<aside class="notes">
+<p>
+Rajouter une dépendance c'est aussi rajouter ses dépendances.
+</p>
+
+</aside>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+</section>
+<section>
+<section id="slide-org4ca045a">
+<h2 id="org4ca045a">UNE PETITE HISTOIRE DE CFT&#x2026;</h2>
+
+<div id="org2d88e1a" class="figure">
+<p><img src="./assets/cft.png" alt="cft.png" class="fragment (appear)" />
+</p>
+</div>
+
+<div id="orgec4b843" class="figure">
+<p><img src="./assets/ghidra.png" alt="ghidra.png" style="margin: auto; display: block; width: 30%;" class="fragment (appear)" />
+</p>
+</div>
+<aside class="notes">
+<p>
+C'est l'histoire d'un produit maison qui servait a faire de l'échange de fichier.
+Celui-ci permettait de remplacer son ancetre CFT.
+Il devait tout révolutionner.
+Il était déployé de partout! (et depuis un certain temps)
+Malheureusement celui-ci avait de graves érreurs de conception.
+Et un jour un developpeur a eu besoin d'en comprendre le fonctionnement et a grand coup de Ghidra il a fouillé et a trouvé beaucoup de choses&#x2026;
+Il implémentait son propre chiffrement (au diable AES)
+Il exposait un serveur HTTP.
+Il était écrit en C à la mode shell.
+Il tournait avec des droits forts.
+</p>
+
+</aside>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-orge79e10a">
+<h3 id="orge79e10a">GIDRA</h3>
+
+<div id="org9e580c0" class="figure">
+<p><img src="./assets/ghidra-ihm.png" alt="ghidra-ihm.png" style="margin: auto; display: block; width: 80%;" />
+</p>
+</div>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+</section>
+<section>
+<section id="slide-orgfddc124">
+<h2 id="orgfddc124">ALORS COMMENT NE PAS EN ARRIVER LA?</h2>
+<ul>
+<li class="fragment appear">Former les équipes de developpement et les architectes.</li>
+<li class="fragment appear">Mettre en place de bonnes pratiques de developpement.</li>
+<li class="fragment appear">Penser à la sécurité "in-depth" dés la conception de l'architecture.</li>
+<li class="fragment appear">Prendre du recul et toujours remettre en question les choix techniques sur toutes les phases d'un projet.</li>
+<li class="fragment appear">Ne pas hésiter à chalenger un besoin métier si la sécurité est en jeu!</li>
+<li class="fragment appear">Ne pas réinventer la roue!</li>
+
+</ul>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-org39ae4c4">
+<h3 id="org39ae4c4">LES OUTILS MAISON</h3>
+<ul>
+<li class="fragment appear">Oui mais pas sans faire attention!</li>
+<li class="fragment appear">Oui mais en réutilisant des élements existants</li>
+<li class="fragment appear">Oui mais en connaissant le langage utilisé</li>
+<li class="fragment appear">Oui mais en réalisant des audit du code réugliers de façon automatisé mais aussi humaine</li>
+<li class="fragment appear">Oui mais uniquement si rien d'autre ne fait l'affaire!</li>
+
+</ul>
+<aside class="notes">
+<p>
+Ne pas hésiter a investir l'équipe ou les équipes a coté de soit pour s'auto-auditer
+</p>
+
+</aside>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+</section>
+<section>
+<section id="slide-orgf490764">
+<h2 id="orgf490764">MERCI</h2>
+
+<div id="org40a37da" class="figure">
+<p><object type="image/svg+xml" data="./assets/Questions-pana.svg" class="questions">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+</section>
+</div>
+</div>
+<script src="./vendor/reveal.js/dist/reveal.js"></script>
+<script src="./vendor/reveal.js/plugin/markdown/markdown.js"></script>
+<script src="./vendor/reveal.js/plugin/notes/notes.js"></script>
+<script src="./vendor/reveal.js/plugin/search/search.js"></script>
+<script src="./vendor/reveal.js/plugin/zoom/zoom.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: 'c',
+rollingLinks: true,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+overview: true,
+width: 1420,
+height: 800,
+minScale: 0.70,
+maxScale: 3.50,
+
+transition: 'linear',
+transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealSearch, RevealZoom ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+]
+
+});
+</script>
+</body>
+</html>
