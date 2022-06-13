@@ -13,15 +13,9 @@
 #+REVEAL_THEME: ./css/slides.css
 
 #+REVEAL_TITLE_SLIDE: <div class="page-title"><h1 id="title" style="width: 900px">Comment éviter des situations cocasses avec un travail d'architecture et de developpement sécurisé</h1><h2>MORVAN Pierre</h2></div>
-#+REVEAL_SLIDE_FOOTER: <footer class="copyright">Event BPI</footer>
+#+REVEAL_SLIDE_FOOTER: <footer class="copyright">Zenika @2022</footer>
 #+REVEAL_HTML: <link href="css/slides.css" rel="stylesheet">
 #+REVEAL_HTML: <title>Comment éviter des situations cocasses avec un travail d'architecture et de developpement sécurisé</title>
-
-#+REVEAL_HTML: <div class="header-tf"><div id="label-container" style="text-align:center"></div></div>
-#+REVEAL_HTML: <script src="vendor/tfjs.js"></script>
-#+REVEAL_HTML: <script src="vendor/speech-commands.js"></script>
-#+REVEAL_HTML: <script src="vendor/tf-backend-wasm.js"></script>
-#+REVEAL_HTML: <script src="js/ml.js"></script>
 
 * WHO AM I?
   #+ATTR_HTML: :style border-radius: 50%; margin: auto; display: block;
@@ -96,7 +90,7 @@
      * Récupération de secrets (LDAP, accès DB, ...)
      * Réécriture des réponses
      * ...
-   * ARP spoofing
+   * ARP spoofing (Usurpation d'IP)
    * ...
    #+BEGIN_NOTES
    tout flux doit être chiffré.
@@ -108,6 +102,8 @@
    * Users unix
    * ...
 ** PREVENTION - SSRF : N'OUBLIONS PAS LE DNS
+   * DNS spoofing (Usurpation DNS)
+   * resolv.conf editable
    * Ordre de résolution du DNS
    * DNS de fallback
 ** Et ce n'est qu'un aperçu...
