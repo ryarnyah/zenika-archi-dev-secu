@@ -27,10 +27,10 @@
 <script src="js/ml.js"></script>
 
 <section>
-<section id="slide-org8f2447d">
-<h2 id="org8f2447d">WHO AM I?</h2>
+<section id="slide-org589f4f1">
+<h2 id="org589f4f1">WHO AM I?</h2>
 
-<div id="orgd739d15" class="figure">
+<div id="org2161a64" class="figure">
 <p><img src="./assets/pierre_znk.png" alt="pierre_znk.png" style="border-radius: 50%; margin: auto; display: block;" />
 </p>
 </div>
@@ -47,42 +47,101 @@ Pierre Morvan @Zenika Paris
 </section>
 </section>
 <section>
-<section id="slide-orgb5c1e43">
-<h2 id="orgb5c1e43">ENCORE DES MICRO-SERVICES?!?</h2>
+<section id="slide-org68f23f6">
+<h2 id="org68f23f6">ENCORE DES MICRO-SERVICES?!?</h2>
 
-<div id="org430e72a" class="figure">
+<div id="org3f57fd6" class="figure">
 <p><object type="image/svg+xml" data="./assets/diagram-spring-cloud.svg" class="org-svg" style="margin: auto; display: block; width: 40%;">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 
-<div id="orgcb860ce" class="figure">
+<div id="orgb9d887f" class="figure">
 <p><img src="./assets/ingress-k8s.png" alt="ingress-k8s.png" style="margin: auto; display: block; width: 40%;" />
 </p>
 </div>
+<aside class="notes">
+<p>
+Lors de ma courte carrière, j'ai rencontré pas mal de failles de sécurité et jamais plus que dernièrement avec l'arrivé des architectures micro-services et du cloud et de leur vision "forteresse" de l'infrastructure.
+Tout le monde pense que tout est sécurisé by design, faute au marketing&#x2026;
+Que ce soit dans les exemple ci-dessus avec Spring ou Kubernetes, l'architecture de base est la meme. Un pool de services accèssibles uniquement via une gateway (on avait la meme archi avant avec des LB&#x2026;).
+Mais autant on savait faire avant avec une architecture similaire autant maintenant&#x2026; c'est discutable.
+</p>
+
+</aside>
 <div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
 </section>
-<section id="slide-org0d92b8a">
-<h3 id="org0d92b8a">SSRF OU COMMENT OUVRIR LA PORTE DE SON SI</h3>
+<section id="slide-orgfe0711e">
+<h3 id="orgfe0711e">SSRF OU COMMENT OUVRIR LA PORTE DE SON SI</h3>
 <p>
 SSR&#x2026; Quoi?
 </p>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
-</section>
-<section id="slide-org6cd8273">
-<h3 id="org6cd8273">CHIFFRER SES FLUX? POURQUOI?</h3>
 
-<div id="org4dec950" class="figure">
-<p><object type="image/svg+xml" data="./assets/service-mesh.svg" class="org-svg" style="margin: auto; display: block; width: 80%;">
+<div id="org560c33b" class="figure">
+<p><object type="image/svg+xml" data="./assets/example-ssrf.svg" class="fragment (appear)" style="margin: auto; display: block; width: 80%;">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 <div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
 </section>
-<section id="slide-orga23fc93">
-<h3 id="orga23fc93">TLS? POURQUOI?</h3>
+<section id="slide-orgaff0b3b">
+<h3 id="orgaff0b3b">SSRF</h3>
+
+<div id="orgc261ef4" class="figure">
+<p><img src="./assets/ssrf-xxe.png" alt="ssrf-xxe.png" style="margin: auto; display: block; width: 90%;" />
+</p>
+</div>
+<aside class="notes">
+<p>
+Cette histoire commence li ya a quelques temps. ce jour la un individu se dit que ça serai une bonne idée de rajouter Sonar au projet.
+Il le rajoute et PAN c'est la déferlante! Et dans ce fatra d'annomalies il découvre des annomalies qui lui font froncer les sourcils?!?
+XMLInputFactory &amp; TransformerFactory &amp; &#x2026;
+En testant il se rend compte que depuis son navigateur il est en capacité de faire des requetes depuis le serveur et donc accèder aux resources exposés sur le 127.0.0.1.
+Manque de bol, dans ces resources, on va retrouver une api exposant la configuration de l'application&#x2026;
+</p>
+
+</aside>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-orgcec97c0">
+<h3 id="orgcec97c0">SSRF: COMMENT S'EN SORTIR?</h3>
+
+<div id="org946c583" class="figure">
+<p><object type="image/svg+xml" data="./assets/Questions-pana.svg" class="questions">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<aside class="notes">
+<p>
+Alors comment faire pour ne pas avoir ce genre de soucis?
+Un WAF peu en effet diminuer la surface d'attaque mais le plus efficace reste juste de rajouter un peu d'analyse statique lors des developpements pour les XXE.
+Après rien ne vaut une relecture humaine et une formation des equipes aux risques (une SSRF pouvant être une fonctionnalité voulue de l'application).
+</p>
+
+</aside>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-orgaafdeff">
+<h3 id="orgaafdeff">MON SERVICE S'EST FAIT ATTAQUE!</h3>
+
+<div id="org97e5319" class="figure">
+<p><object type="image/svg+xml" data="./assets/service-mesh.svg" class="org-svg" style="margin: auto; display: block; width: 80%;">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<aside class="notes">
+<p>
+Mais la SSRF est loin d'etre le seul risque. Immaginous que vous avez un service qui est vulnerable et que l'attaquant arive a ouvrir une console sur celui-ci.
+Que peut-on faire pour limiter la casse? Et oui tout cassera, tout sera un jour attaqué, tel est une façon de voir les choses.
+</p>
+
+</aside>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
+<section id="slide-org87ea1eb">
+<h3 id="org87ea1eb">TLS? POURQUOI?</h3>
 <ul>
-<li>Interception réseau
+<li>Limiter les interception réseau
 <ul>
 <li>Récupération de secrets (LDAP, accès DB, &#x2026;)</li>
 <li>Réécriture des réponses</li>
@@ -102,8 +161,8 @@ Ne pas oublier de gérer des CRLs ou un répondeur OCSP
 </aside>
 <div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
 </section>
-<section id="slide-orgcf43dd8">
-<h3 id="orgcf43dd8">Limiter au maximum les droits d'un process</h3>
+<section id="slide-orgeb3729d">
+<h3 id="orgeb3729d">Limiter au maximum les droits d'un process</h3>
 <ul>
 <li>Containers (SystemD sait aussi faire des containers!)</li>
 <li>Capabilities</li>
@@ -113,8 +172,8 @@ Ne pas oublier de gérer des CRLs ou un répondeur OCSP
 </ul>
 <div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
 </section>
-<section id="slide-org89768fd">
-<h3 id="org89768fd">N'OUBLIONS PAS LE DNS</h3>
+<section id="slide-org5cebabe">
+<h3 id="org5cebabe">N'OUBLIONS PAS LE DNS</h3>
 <ul>
 <li>Ordre de résolution du DNS</li>
 <li>DNS de fallback</li>
@@ -122,12 +181,22 @@ Ne pas oublier de gérer des CRLs ou un répondeur OCSP
 </ul>
 <div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
 </section>
+<section id="slide-org7347dbb">
+<h3 id="org7347dbb">Et ce n'est qu'un apperçu&#x2026;</h3>
+
+<div id="orgd32da34" class="figure">
+<p><object type="image/svg+xml" data="./assets/Programming-pana.svg" class="org-svg" style="margin: auto; display: block; width: 50%;">
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+</section>
 </section>
 <section>
-<section id="slide-org5b5c12d">
-<h2 id="org5b5c12d">DEPENDENCY HELL</h2>
+<section id="slide-orgeb91681">
+<h2 id="orgeb91681">DEPENDENCY HELL</h2>
 
-<div id="org22233fc" class="figure">
+<div id="org05595d7" class="figure">
 <p><object type="image/svg+xml" data="./assets/dep-hell.svg" class="org-svg" style="margin: auto; display: block; width: 95%;">
 Sorry, your browser does not support SVG.</object>
 </p>
@@ -147,10 +216,10 @@ Le module analysé c'est quarkus-neo4j au milleu.
 </aside>
 <div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
 </section>
-<section id="slide-org2466fed">
-<h3 id="org2466fed">DEPENDENCY HELL</h3>
+<section id="slide-orgb1c0d32">
+<h3 id="orgb1c0d32">DEPENDENCY HELL</h3>
 
-<div id="orgc54a47e" class="figure">
+<div id="org1f93473" class="figure">
 <p><img src="./assets/quarkus-extensions.png" alt="quarkus-extensions.png" style="margin: auto; display: block; width: 70%;" />
 </p>
 </div>
@@ -162,18 +231,18 @@ Framework mis en avant pour l'écriture de nouveaux modules.
 </aside>
 <div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
 </section>
-<section id="slide-orgebfec86">
-<h3 id="orgebfec86">DEPENDENCY HELL: COMMENT S'EN SORTIR?</h3>
+<section id="slide-orge60a4a2">
+<h3 id="orge60a4a2">DEPENDENCY HELL: COMMENT S'EN SORTIR?</h3>
 
-<div id="orgb5295c2" class="figure">
+<div id="org1afd5bc" class="figure">
 <p><object type="image/svg+xml" data="./assets/Questions-pana.svg" class="questions">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 <div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
 </section>
-<section id="slide-orgf55bd36">
-<h3 id="orgf55bd36">DEPENDENCY HELL: DES OUTILS EN JAVA</h3>
+<section id="slide-org35277f2">
+<h3 id="org35277f2">DEPENDENCY HELL: DES OUTILS EN JAVA</h3>
 <ul>
 <li class="fragment appear">Des incontournables avec maven incontournables
 <ul>
@@ -195,15 +264,15 @@ Rajouter une dépendance c'est aussi rajouter ses dépendances.
 </section>
 </section>
 <section>
-<section id="slide-org4ca045a">
-<h2 id="org4ca045a">UNE PETITE HISTOIRE DE CFT&#x2026;</h2>
+<section id="slide-org9edd7d2">
+<h2 id="org9edd7d2">UNE PETITE HISTOIRE DE CFT&#x2026;</h2>
 
-<div id="org2d88e1a" class="figure">
+<div id="org50cc704" class="figure">
 <p><img src="./assets/cft.png" alt="cft.png" class="fragment (appear)" />
 </p>
 </div>
 
-<div id="orgec4b843" class="figure">
+<div id="org059da3f" class="figure">
 <p><img src="./assets/ghidra.png" alt="ghidra.png" style="margin: auto; display: block; width: 30%;" class="fragment (appear)" />
 </p>
 </div>
@@ -224,10 +293,10 @@ Il tournait avec des droits forts.
 </aside>
 <div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
 </section>
-<section id="slide-orge79e10a">
-<h3 id="orge79e10a">GIDRA</h3>
+<section id="slide-org72de7a4">
+<h3 id="org72de7a4">GIDRA</h3>
 
-<div id="org9e580c0" class="figure">
+<div id="orgeca8262" class="figure">
 <p><img src="./assets/ghidra-ihm.png" alt="ghidra-ihm.png" style="margin: auto; display: block; width: 80%;" />
 </p>
 </div>
@@ -235,11 +304,12 @@ Il tournait avec des droits forts.
 </section>
 </section>
 <section>
-<section id="slide-orgfddc124">
-<h2 id="orgfddc124">ALORS COMMENT NE PAS EN ARRIVER LA?</h2>
+<section id="slide-org6f108aa">
+<h2 id="org6f108aa">ALORS COMMENT NE PAS EN ARRIVER LA?</h2>
 <ul>
 <li class="fragment appear">Former les équipes de developpement et les architectes.</li>
 <li class="fragment appear">Mettre en place de bonnes pratiques de developpement.</li>
+<li class="fragment appear">Intégrer la sécurité dans le processus de developpement.</li>
 <li class="fragment appear">Penser à la sécurité "in-depth" dés la conception de l'architecture.</li>
 <li class="fragment appear">Prendre du recul et toujours remettre en question les choix techniques sur toutes les phases d'un projet.</li>
 <li class="fragment appear">Ne pas hésiter à chalenger un besoin métier si la sécurité est en jeu!</li>
@@ -248,8 +318,8 @@ Il tournait avec des droits forts.
 </ul>
 <div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
 </section>
-<section id="slide-org39ae4c4">
-<h3 id="org39ae4c4">LES OUTILS MAISON</h3>
+<section id="slide-orgffcc29e">
+<h3 id="orgffcc29e">LES OUTILS MAISON</h3>
 <ul>
 <li class="fragment appear">Oui mais pas sans faire attention!</li>
 <li class="fragment appear">Oui mais en réutilisant des élements existants</li>
@@ -268,10 +338,10 @@ Ne pas hésiter a investir l'équipe ou les équipes a coté de soit pour s'auto
 </section>
 </section>
 <section>
-<section id="slide-orgf490764">
-<h2 id="orgf490764">MERCI</h2>
+<section id="slide-org263962f">
+<h2 id="org263962f">MERCI</h2>
 
-<div id="org40a37da" class="figure">
+<div id="orgb01976f" class="figure">
 <p><object type="image/svg+xml" data="./assets/Questions-pana.svg" class="questions">
 Sorry, your browser does not support SVG.</object>
 </p>

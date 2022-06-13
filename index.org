@@ -37,13 +37,44 @@
   [[./assets/diagram-spring-cloud.svg]]
   #+ATTR_HTML: :style margin: auto; display: block; width: 40%;
   [[./assets/ingress-k8s.png]]
+  #+BEGIN_NOTES
+  Lors de ma courte carrière, j'ai rencontré pas mal de failles de sécurité et jamais plus que dernièrement avec l'arrivé des architectures micro-services et du cloud et de leur vision "forteresse" de l'infrastructure.
+  Tout le monde pense que tout est sécurisé by design, faute au marketing...
+  Que ce soit dans les exemple ci-dessus avec Spring ou Kubernetes, l'architecture de base est la meme. Un pool de services accèssibles uniquement via une gateway (on avait la meme archi avant avec des LB...).
+  Mais autant on savait faire avant avec une architecture similaire autant maintenant... c'est discutable.
+  #+END_NOTES
 ** SSRF OU COMMENT OUVRIR LA PORTE DE SON SI
    SSR... Quoi?
-** CHIFFRER SES FLUX? POURQUOI?
+   #+ATTR_REVEAL: :frag (appear)
+   #+ATTR_HTML: :style margin: auto; display: block; width: 80%;
+   [[./assets/example-ssrf.svg]]
+** SSRF
+   #+ATTR_HTML: :style margin: auto; display: block; width: 90%;
+   [[./assets/ssrf-xxe.png]]
+   #+BEGIN_NOTES
+   Cette histoire commence li ya a quelques temps. ce jour la un individu se dit que ça serai une bonne idée de rajouter Sonar au projet.
+   Il le rajoute et PAN c'est la déferlante! Et dans ce fatra d'annomalies il découvre des annomalies qui lui font froncer les sourcils?!?
+   XMLInputFactory & TransformerFactory & ...
+   En testant il se rend compte que depuis son navigateur il est en capacité de faire des requetes depuis le serveur et donc accèder aux resources exposés sur le 127.0.0.1.
+   Manque de bol, dans ces resources, on va retrouver une api exposant la configuration de l'application...
+   #+END_NOTES
+** SSRF: COMMENT S'EN SORTIR?
+   #+ATTR_HTML: :class questions
+   [[./assets/Questions-pana.svg]]
+   #+BEGIN_NOTES
+   Alors comment faire pour ne pas avoir ce genre de soucis?
+   Un WAF peu en effet diminuer la surface d'attaque mais le plus efficace reste juste de rajouter un peu d'analyse statique lors des developpements pour les XXE.
+   Après rien ne vaut une relecture humaine et une formation des equipes aux risques (une SSRF pouvant être une fonctionnalité voulue de l'application).
+   #+END_NOTES
+** MON SERVICE S'EST FAIT ATTAQUE!
    #+ATTR_HTML: :style margin: auto; display: block; width: 80%;
    [[./assets/service-mesh.svg]]
+   #+BEGIN_NOTES
+   Mais la SSRF est loin d'etre le seul risque. Immaginous que vous avez un service qui est vulnerable et que l'attaquant arive a ouvrir une console sur celui-ci.
+   Que peut-on faire pour limiter la casse? Et oui tout cassera, tout sera un jour attaqué, tel est une façon de voir les choses.
+   #+END_NOTES
 ** TLS? POURQUOI?
-   * Interception réseau
+   * Limiter les interception réseau
      * Récupération de secrets (LDAP, accès DB, ...)
      * Réécriture des réponses
      * ...
@@ -61,6 +92,9 @@
 ** N'OUBLIONS PAS LE DNS
    * Ordre de résolution du DNS
    * DNS de fallback
+** Et ce n'est qu'un apperçu...
+   #+ATTR_HTML: :style margin: auto; display: block; width: 50%;
+   [[./assets/Programming-pana.svg]]
 * DEPENDENCY HELL
   #+ATTR_HTML: :style margin: auto; display: block; width: 95%;
   [[./assets/dep-hell.svg]]
