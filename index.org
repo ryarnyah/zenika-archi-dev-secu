@@ -32,7 +32,23 @@
   @ryarnyah
   #+ATTR_HTML: :style text-align: center
   "Du Java mais pas que..."
-* ENCORE DES MICRO-SERVICES?!?
+* PARLONS ARCHITECTURE ET DEV SECURISES
+  * Pour éviter des situations
+    * réellement vécues
+    * fréquentes
+    * souvent cocasses
+  * Sur des contextes techniques divers et variés mais COURANTS
+  * Je vous propose 3 récits édifiants à propos :
+    * D'une architecture microservice (Architecture)
+    * D'une implémentation de service (Développement)
+    * D'un système de partage de fichiers (Intégration)
+  #+BEGIN_NOTES
+  #+END_NOTES
+* RECIT 1
+  Une histoire d'architecture microservice...
+  #+BEGIN_NOTES
+  #+END_NOTES
+** CONTEXTE : ENCORE DES MICRO-SERVICES ?!?
   #+ATTR_HTML: :style margin: auto; display: block; width: 40%;
   [[./assets/diagram-spring-cloud.svg]]
   #+ATTR_HTML: :style margin: auto; display: block; width: 40%;
@@ -43,22 +59,23 @@
   Que ce soit dans les exemple ci-dessus avec Spring ou Kubernetes, l'architecture de base est la meme. Un pool de services accèssibles uniquement via une gateway (on avait la meme archi avant avec des LB...).
   Mais autant on savait faire avant avec une architecture similaire autant maintenant... c'est discutable.
   #+END_NOTES
-** SSRF OU COMMENT OUVRIR LA PORTE DE SON SI
-   SSR... Quoi?
+** PROBLEME - SSRF : OU COMMENT OUVRIR LA PORTE DE SON SI
+   SSR... Quoi ?
+   => Server-Side Request Forgery
    #+ATTR_REVEAL: :frag (appear)
    #+ATTR_HTML: :style margin: auto; display: block; width: 80%;
    [[./assets/example-ssrf.svg]]
-** SSRF
+** PROBLEME - SSRF : via XML External Entity
    #+ATTR_HTML: :style margin: auto; display: block; width: 90%;
    [[./assets/ssrf-xxe.png]]
    #+BEGIN_NOTES
    Cette histoire commence li ya a quelques temps. ce jour la un individu se dit que ça serai une bonne idée de rajouter Sonar au projet.
-   Il le rajoute et PAN c'est la déferlante! Et dans ce fatra d'annomalies il découvre des annomalies qui lui font froncer les sourcils?!?
+   Il le rajoute et PAN c'est la déferlante! Et dans ce fatra d'annomalies il découvre des annomalies qui lui font froncer les sourcils ?!?
    XMLInputFactory & TransformerFactory & ...
    En testant il se rend compte que depuis son navigateur il est en capacité de faire des requetes depuis le serveur et donc accèder aux resources exposés sur le 127.0.0.1.
    Manque de bol, dans ces resources, on va retrouver une api exposant la configuration de l'application...
    #+END_NOTES
-** SSRF: COMMENT S'EN SORTIR?
+** PREVENTION - SSRF : COMMENT ?
    #+ATTR_HTML: :class questions
    [[./assets/Questions-pana.svg]]
    #+BEGIN_NOTES
@@ -66,15 +83,16 @@
    Un WAF peu en effet diminuer la surface d'attaque mais le plus efficace reste juste de rajouter un peu d'analyse statique lors des developpements pour les XXE.
    Après rien ne vaut une relecture humaine et une formation des equipes aux risques (une SSRF pouvant être une fonctionnalité voulue de l'application).
    #+END_NOTES
-** MON SERVICE S'EST FAIT ATTAQUE!
+** PREVENTION - SSRF : ET SI MON SERVICE SE FAIT ATTAQUER ?!
    #+ATTR_HTML: :style margin: auto; display: block; width: 80%;
    [[./assets/service-mesh.svg]]
    #+BEGIN_NOTES
    Mais la SSRF est loin d'etre le seul risque. Immaginous que vous avez un service qui est vulnerable et que l'attaquant arive a ouvrir une console sur celui-ci.
    Que peut-on faire pour limiter la casse? Et oui tout cassera, tout sera un jour attaqué, tel est une façon de voir les choses.
    #+END_NOTES
-** TLS? POURQUOI?
-   * Limiter les interception réseau
+** PREVENTION - SSRF : TLS ? POURQUOI ?
+   * TLS : Transport Layer Security - protocol de chiffrement de communications
+   * Limiter les interceptions au niveau du réseau
      * Récupération de secrets (LDAP, accès DB, ...)
      * Réécriture des réponses
      * ...
@@ -84,18 +102,22 @@
    tout flux doit être chiffré.
    Ne pas oublier de gérer des CRLs ou un répondeur OCSP
    #+END_NOTES
-** Limiter au maximum les droits d'un process
-   * Containers (SystemD sait aussi faire des containers!)
+** PREVENTION - SSRF : Limiter au maximum les droits d'un process
+   * Containers (SystemD sait aussi faire des containers !)
    * Capabilities
    * Users unix
    * ...
-** N'OUBLIONS PAS LE DNS
+** PREVENTION - SSRF : N'OUBLIONS PAS LE DNS
    * Ordre de résolution du DNS
    * DNS de fallback
-** Et ce n'est qu'un apperçu...
+** Et ce n'est qu'un aperçu...
    #+ATTR_HTML: :style margin: auto; display: block; width: 50%;
    [[./assets/Programming-pana.svg]]
-* DEPENDENCY HELL
+* RECIT 2
+  Une histoire d'implémentation de service...
+  #+BEGIN_NOTES
+  #+END_NOTES
+** CONTEXTE : Introduction d'une dépendance à une lib Java
   #+ATTR_HTML: :style margin: auto; display: block; width: 95%;
   [[./assets/dep-hell.svg]]
   #+BEGIN_NOTES
@@ -104,28 +126,33 @@
   Qui n'a jamais eu de dépendances en double dans son projet?
   Qui n'a jamais eu de ClassCastException ou de MethodNotFoundException?
   
-  Le module analysé c'est quarkus-neo4j au milleu.
+  Le module analysé c'est quarkus-neo4j au milieu.
   #+END_NOTES
-** DEPENDENCY HELL
+** PROBLEME - DEPENDENCY HELL
   #+ATTR_HTML: :style margin: auto; display: block; width: 70%;
   [[./assets/quarkus-extensions.png]]
   #+BEGIN_NOTES
   Framework mis en avant pour l'écriture de nouveaux modules.
   #+END_NOTES
-** DEPENDENCY HELL: COMMENT S'EN SORTIR?
+** PREVENTION - DEPENDENCY HELL : COMMENT S'EN SORTIR ?
    #+ATTR_HTML: :class questions
   [[./assets/Questions-pana.svg]]
-** DEPENDENCY HELL: DES OUTILS EN JAVA
+** PREVENTION - DEPENDENCY HELL : DES OUTILS EN JAVA
    #+ATTR_REVEAL: :frag (appear)
-   * Des incontournables avec maven incontournables
+   * Des incontournables avec Maven
      * Maven Enforcer Plugin
      * Maven Dependency Check
    * Des scans réguliers
-   * Mais c'est aussi une éducation des équipe
+   * Mais c'est aussi une éducation des équipes
+     * La meilleure dépendance est celle qui n'existe pas
    #+BEGIN_NOTES
    Rajouter une dépendance c'est aussi rajouter ses dépendances.
    #+END_NOTES
-* UNE PETITE HISTOIRE DE CFT...
+* RECIT 3
+  Une histoire de partage de fichiers...
+  #+BEGIN_NOTES
+  #+END_NOTES
+** CONTEXTE : UNE PETITE HISTOIRE DE CFT...
   #+ATTR_REVEAL: :frag (appear)
   [[./assets/cft.png]]
   #+ATTR_REVEAL: :frag (appear)
@@ -143,28 +170,18 @@
   Il était écrit en C à la mode shell.
   Il tournait avec des droits forts.
   #+END_NOTES
-** GIDRA
+** PROBLEME - L'OUTIL MAISON : GHIDRA
    #+ATTR_HTML: :style margin: auto; display: block; width: 80%;
    [[./assets/ghidra-ihm.png]]
-* ALORS COMMENT NE PAS EN ARRIVER LA?
+* LECONS A EN TIRER : COMMENT NE PAS EN ARRIVER LA ?
   #+ATTR_REVEAL: :frag (appear)
-  * Former les équipes de developpement et les architectes.
-  * Mettre en place de bonnes pratiques de developpement.
-  * Intégrer la sécurité dans le processus de developpement.
-  * Penser à la sécurité "in-depth" dés la conception de l'architecture.
+  * Former les équipes de développement et les architectes.
+  * Mettre en place de bonnes pratiques de développement.
+  * Intégrer la sécurité dans le processus de développement.
+  * Penser à la sécurité "in-depth" dès la conception de l'architecture.
   * Prendre du recul et toujours remettre en question les choix techniques sur toutes les phases d'un projet.
-  * Ne pas hésiter à chalenger un besoin métier si la sécurité est en jeu!
-  * Ne pas réinventer la roue!
-** LES OUTILS MAISON
-  #+ATTR_REVEAL: :frag (appear)
-  * Oui mais pas sans faire attention!
-  * Oui mais en réutilisant des élements existants
-  * Oui mais en connaissant le langage utilisé
-  * Oui mais en réalisant des audit du code réugliers de façon automatisé mais aussi humaine
-  * Oui mais uniquement si rien d'autre ne fait l'affaire!
-  #+BEGIN_NOTES
-  Ne pas hésiter a investir l'équipe ou les équipes a coté de soit pour s'auto-auditer
-  #+END_NOTES
+  * Ne pas hésiter à challenger un besoin métier si la sécurité est en jeu !
+  * Ne pas réinventer la roue !
 * MERCI
    #+ATTR_HTML: :class questions
   [[./assets/Questions-pana.svg]]
