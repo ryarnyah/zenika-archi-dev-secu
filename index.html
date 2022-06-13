@@ -21,10 +21,10 @@
 <title>Comment éviter des situations cocasses avec un travail d'architecture et de developpement sécurisé</title>
 
 <section>
-<section id="slide-org8c20893">
-<h2 id="org8c20893">WHO AM I?</h2>
+<section id="slide-org86c6c78">
+<h2 id="org86c6c78">WHO AM I?</h2>
 
-<div id="org0a8414d" class="figure">
+<div id="orgad73939" class="figure">
 <p><img src="./assets/pierre_znk.png" alt="pierre_znk.png" style="border-radius: 50%; margin: auto; display: block;" />
 </p>
 </div>
@@ -41,8 +41,8 @@ Pierre Morvan @Zenika Paris
 </section>
 </section>
 <section>
-<section id="slide-orgca1d398">
-<h2 id="orgca1d398">PARLONS ARCHITECTURE ET DEV SECURISES</h2>
+<section id="slide-orgee5d7f8">
+<h2 id="orgee5d7f8">PARLONS ARCHITECTURE ET DEV SECURISES</h2>
 <ul>
 <li>Pour éviter des situations
 <ul>
@@ -68,8 +68,8 @@ nil
 </section>
 </section>
 <section>
-<section id="slide-orgafbac2b">
-<h2 id="orgafbac2b">RECIT 1</h2>
+<section id="slide-org15cf626">
+<h2 id="org15cf626">RECIT 1</h2>
 <p>
 Une histoire d'architecture microservice&#x2026;
 </p>
@@ -78,16 +78,16 @@ nil
 </aside>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org4df78e1">
-<h3 id="org4df78e1">CONTEXTE : ENCORE DES MICRO-SERVICES ?!?</h3>
+<section id="slide-org1a22af6">
+<h3 id="org1a22af6">CONTEXTE : ENCORE DES MICRO-SERVICES ?!?</h3>
 
-<div id="org51ef092" class="figure">
+<div id="org1f6ef23" class="figure">
 <p><object type="image/svg+xml" data="./assets/diagram-spring-cloud.svg" class="org-svg" style="margin: auto; display: block; width: 40%;">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 
-<div id="org99b9dff" class="figure">
+<div id="org1bc6ab5" class="figure">
 <p><img src="./assets/ingress-k8s.png" alt="ingress-k8s.png" style="margin: auto; display: block; width: 40%;" />
 </p>
 </div>
@@ -102,24 +102,24 @@ Mais autant on savait faire avant avec une architecture similaire autant mainten
 </aside>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org82cfb33">
-<h3 id="org82cfb33">PROBLEME - SSRF : OU COMMENT OUVRIR LA PORTE DE SON SI</h3>
+<section id="slide-org8f58564">
+<h3 id="org8f58564">PROBLEME - SSRF : OU COMMENT OUVRIR LA PORTE DE SON SI</h3>
 <p>
 SSR&#x2026; Quoi ?
 =&gt; Server-Side Request Forgery
 </p>
 
-<div id="orga23b067" class="figure">
+<div id="org803f7a0" class="figure">
 <p><object type="image/svg+xml" data="./assets/example-ssrf.svg" class="fragment (appear)" style="margin: auto; display: block; width: 80%;">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orgb99a9ff">
-<h3 id="orgb99a9ff">PROBLEME - SSRF : via XML External Entity</h3>
+<section id="slide-orgdc94051">
+<h3 id="orgdc94051">PROBLEME - SSRF : via XML External Entity</h3>
 
-<div id="org706bf12" class="figure">
+<div id="org472a41c" class="figure">
 <p><img src="./assets/ssrf-xxe.png" alt="ssrf-xxe.png" style="margin: auto; display: block; width: 90%;" />
 </p>
 </div>
@@ -135,10 +135,10 @@ Manque de bol, dans ces resources, on va retrouver une api exposant la configura
 </aside>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orgcfcad76">
-<h3 id="orgcfcad76">PREVENTION - SSRF : COMMENT ?</h3>
+<section id="slide-org1461ba9">
+<h3 id="org1461ba9">PREVENTION - SSRF : COMMENT ?</h3>
 
-<div id="orgb0f037e" class="figure">
+<div id="org1a3cb36" class="figure">
 <p><object type="image/svg+xml" data="./assets/Questions-pana.svg" class="questions">
 Sorry, your browser does not support SVG.</object>
 </p>
@@ -153,11 +153,11 @@ Après rien ne vaut une relecture humaine et une formation des equipes aux risqu
 </aside>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orgb383e28">
-<h3 id="orgb383e28">PREVENTION - SSRF : ET SI MON SERVICE SE FAIT ATTAQUER ?!</h3>
+<section id="slide-org8f40ffa">
+<h3 id="org8f40ffa">PREVENTION - SSRF : ET SI MON SERVICE SE FAIT ATTAQUER ?!</h3>
 
-<div id="org14ca9dd" class="figure">
-<p><object type="image/svg+xml" data="./assets/service-mesh.svg" class="org-svg" style="margin: auto; display: block; width: 80%;">
+<div id="orgb4caa77" class="figure">
+<p><object type="image/svg+xml" data="./assets/service-mesh.svg" class="org-svg" style="margin: auto; display: block; width: 60%;">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
@@ -170,8 +170,8 @@ Que peut-on faire pour limiter la casse? Et oui tout cassera, tout sera un jour 
 </aside>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org921dcfb">
-<h3 id="org921dcfb">PREVENTION - SSRF : TLS ? POURQUOI ?</h3>
+<section id="slide-org99a8fc9">
+<h3 id="org99a8fc9">PREVENTION - SSRF : TLS ? POURQUOI ?</h3>
 <ul>
 <li>TLS : Transport Layer Security - protocol de chiffrement de communications</li>
 <li>Limiter les interceptions au niveau du réseau
@@ -194,8 +194,8 @@ Ne pas oublier de gérer des CRLs ou un répondeur OCSP
 </aside>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orgf74c16b">
-<h3 id="orgf74c16b">PREVENTION - SSRF : Limiter au maximum les droits d'un process</h3>
+<section id="slide-org711f029">
+<h3 id="org711f029">PREVENTION - SSRF : Limiter au maximum les droits d'un process</h3>
 <ul>
 <li>Containers (SystemD sait aussi faire des containers !)</li>
 <li>Capabilities</li>
@@ -205,8 +205,8 @@ Ne pas oublier de gérer des CRLs ou un répondeur OCSP
 </ul>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orgc408956">
-<h3 id="orgc408956">PREVENTION - SSRF : N'OUBLIONS PAS LE DNS</h3>
+<section id="slide-org60a2212">
+<h3 id="org60a2212">PREVENTION - SSRF : N'OUBLIONS PAS LE DNS</h3>
 <ul>
 <li>DNS spoofing (Usurpation DNS)</li>
 <li>resolv.conf editable</li>
@@ -216,10 +216,10 @@ Ne pas oublier de gérer des CRLs ou un répondeur OCSP
 </ul>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orgab3eb6d">
-<h3 id="orgab3eb6d">Et ce n'est qu'un aperçu&#x2026;</h3>
+<section id="slide-org0c4e007">
+<h3 id="org0c4e007">Et ce n'est qu'un aperçu&#x2026;</h3>
 
-<div id="org6762b35" class="figure">
+<div id="orgcb19943" class="figure">
 <p><object type="image/svg+xml" data="./assets/Programming-pana.svg" class="org-svg" style="margin: auto; display: block; width: 50%;">
 Sorry, your browser does not support SVG.</object>
 </p>
@@ -228,8 +228,8 @@ Sorry, your browser does not support SVG.</object>
 </section>
 </section>
 <section>
-<section id="slide-org5cfabd5">
-<h2 id="org5cfabd5">RECIT 2</h2>
+<section id="slide-org6374690">
+<h2 id="org6374690">RECIT 2</h2>
 <p>
 Une histoire d'implémentation de service&#x2026;
 </p>
@@ -238,10 +238,10 @@ nil
 </aside>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org3470084">
-<h3 id="org3470084">CONTEXTE : Introduction d'une dépendance à une lib Java</h3>
+<section id="slide-orgd3c38a7">
+<h3 id="orgd3c38a7">CONTEXTE : Introduction d'une dépendance à une lib Java</h3>
 
-<div id="orge499f1f" class="figure">
+<div id="org8c7bf40" class="figure">
 <p><object type="image/svg+xml" data="./assets/dep-hell.svg" class="org-svg" style="margin: auto; display: block; width: 95%;">
 Sorry, your browser does not support SVG.</object>
 </p>
@@ -261,10 +261,10 @@ Le module analysé c'est quarkus-neo4j au milieu.
 </aside>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org4a4f952">
-<h3 id="org4a4f952">PROBLEME - DEPENDENCY HELL</h3>
+<section id="slide-orged9773b">
+<h3 id="orged9773b">PROBLEME - DEPENDENCY HELL</h3>
 
-<div id="org9464f28" class="figure">
+<div id="org406e227" class="figure">
 <p><img src="./assets/quarkus-extensions.png" alt="quarkus-extensions.png" style="margin: auto; display: block; width: 70%;" />
 </p>
 </div>
@@ -276,18 +276,18 @@ Framework mis en avant pour l'écriture de nouveaux modules.
 </aside>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org86b7378">
-<h3 id="org86b7378">PREVENTION - DEPENDENCY HELL : COMMENT S'EN SORTIR ?</h3>
+<section id="slide-orgae7129c">
+<h3 id="orgae7129c">PREVENTION - DEPENDENCY HELL : COMMENT S'EN SORTIR ?</h3>
 
-<div id="org8ca857b" class="figure">
+<div id="orgbcd11f1" class="figure">
 <p><object type="image/svg+xml" data="./assets/Questions-pana.svg" class="questions">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orga9728cc">
-<h3 id="orga9728cc">PREVENTION - DEPENDENCY HELL : DES OUTILS EN JAVA</h3>
+<section id="slide-org024a61d">
+<h3 id="org024a61d">PREVENTION - DEPENDENCY HELL : DES OUTILS EN JAVA</h3>
 <ul>
 <li class="fragment appear">Des incontournables avec Maven
 <ul>
@@ -303,6 +303,11 @@ Sorry, your browser does not support SVG.</object>
 </ul></li>
 
 </ul>
+
+<div id="org4436a32" class="figure">
+<p><img src="./assets/dependency-track.png" alt="dependency-track.png" style="margin: auto; display: block; width: 40%;" class="fragment (appear)" />
+</p>
+</div>
 <aside class="notes">
 <p>
 Rajouter une dépendance c'est aussi rajouter ses dépendances.
@@ -313,8 +318,8 @@ Rajouter une dépendance c'est aussi rajouter ses dépendances.
 </section>
 </section>
 <section>
-<section id="slide-orgd0ff9c1">
-<h2 id="orgd0ff9c1">RECIT 3</h2>
+<section id="slide-org1e8079b">
+<h2 id="org1e8079b">RECIT 3</h2>
 <p>
 Une histoire de partage de fichiers&#x2026;
 </p>
@@ -323,15 +328,15 @@ nil
 </aside>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org3ebbf2c">
-<h3 id="org3ebbf2c">CONTEXTE : UNE PETITE HISTOIRE DE CFT&#x2026;</h3>
+<section id="slide-org4a99838">
+<h3 id="org4a99838">CONTEXTE : UNE PETITE HISTOIRE DE CFT&#x2026;</h3>
 
-<div id="orgcbd8672" class="figure">
+<div id="orgd417bf4" class="figure">
 <p><img src="./assets/cft.png" alt="cft.png" class="fragment (appear)" />
 </p>
 </div>
 
-<div id="org4beb5a5" class="figure">
+<div id="org14598fa" class="figure">
 <p><img src="./assets/ghidra.png" alt="ghidra.png" style="margin: auto; display: block; width: 30%;" class="fragment (appear)" />
 </p>
 </div>
@@ -352,19 +357,30 @@ Il tournait avec des droits forts.
 </aside>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org14724da">
-<h3 id="org14724da">PROBLEME - L'OUTIL MAISON : GHIDRA</h3>
+<section id="slide-orgf3d0e1d">
+<h3 id="orgf3d0e1d">PROBLEME - L'OUTIL MAISON : GHIDRA</h3>
 
-<div id="org657583b" class="figure">
+<div id="org1dc2d12" class="figure">
 <p><img src="./assets/ghidra-ihm.png" alt="ghidra-ihm.png" style="margin: auto; display: block; width: 80%;" />
 </p>
 </div>
 <div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
+<section id="slide-orgbead39a">
+<h3 id="orgbead39a">PREVENTION - L'OUTIL MAISON</h3>
+<ul>
+<li class="fragment appear">Ne pas réinventer la roue!</li>
+<li class="fragment appear">Utiliser des technologies maitrisés.</li>
+<li class="fragment appear">Développer en prenant en compte des standard (RFC, etc).</li>
+<li class="fragment appear">Faire à minima des audits externes avant toute mise en production.</li>
+
+</ul>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
+</section>
 </section>
 <section>
-<section id="slide-org3b1f324">
-<h2 id="org3b1f324">LECONS A EN TIRER : COMMENT NE PAS EN ARRIVER LA ?</h2>
+<section id="slide-org85e7045">
+<h2 id="org85e7045">LECONS A EN TIRER : COMMENT NE PAS EN ARRIVER LA ?</h2>
 <ul>
 <li class="fragment appear">Former les équipes de développement et les architectes.</li>
 <li class="fragment appear">Mettre en place de bonnes pratiques de développement.</li>
@@ -379,10 +395,10 @@ Il tournait avec des droits forts.
 </section>
 </section>
 <section>
-<section id="slide-orgdc8e833">
-<h2 id="orgdc8e833">MERCI</h2>
+<section id="slide-orgf9eb31a">
+<h2 id="orgf9eb31a">MERCI</h2>
 
-<div id="orgd12b536" class="figure">
+<div id="org32452d9" class="figure">
 <p><object type="image/svg+xml" data="./assets/Questions-pana.svg" class="questions">
 Sorry, your browser does not support SVG.</object>
 </p>
