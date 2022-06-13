@@ -15,22 +15,16 @@
 <div class="slides">
 <section id="sec-title-slide">
 <div class="page-title"><h1 id="title" style="width: 900px">Comment éviter des situations cocasses avec un travail d'architecture et de developpement sécurisé</h1><h2>MORVAN Pierre</h2></div>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
 <link href="css/slides.css" rel="stylesheet">
 <title>Comment éviter des situations cocasses avec un travail d'architecture et de developpement sécurisé</title>
 
-<div class="header-tf"><div id="label-container" style="text-align:center"></div></div>
-<script src="vendor/tfjs.js"></script>
-<script src="vendor/speech-commands.js"></script>
-<script src="vendor/tf-backend-wasm.js"></script>
-<script src="js/ml.js"></script>
-
 <section>
-<section id="slide-org589f4f1">
-<h2 id="org589f4f1">WHO AM I?</h2>
+<section id="slide-org8c20893">
+<h2 id="org8c20893">WHO AM I?</h2>
 
-<div id="org2161a64" class="figure">
+<div id="org0a8414d" class="figure">
 <p><img src="./assets/pierre_znk.png" alt="pierre_znk.png" style="border-radius: 50%; margin: auto; display: block;" />
 </p>
 </div>
@@ -43,20 +37,57 @@ Pierre Morvan @Zenika Paris
 <p style="text-align: center">
 "Du Java mais pas que&#x2026;"
 </p>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
 </section>
 <section>
-<section id="slide-org68f23f6">
-<h2 id="org68f23f6">ENCORE DES MICRO-SERVICES?!?</h2>
+<section id="slide-orgca1d398">
+<h2 id="orgca1d398">PARLONS ARCHITECTURE ET DEV SECURISES</h2>
+<ul>
+<li>Pour éviter des situations
+<ul>
+<li>réellement vécues</li>
+<li>fréquentes</li>
+<li>souvent cocasses</li>
 
-<div id="org3f57fd6" class="figure">
+</ul></li>
+<li>Sur des contextes techniques divers et variés mais COURANTS</li>
+<li>Je vous propose 3 récits édifiants à propos :
+<ul>
+<li>D'une architecture microservice (Architecture)</li>
+<li>D'une implémentation de service (Développement)</li>
+<li>D'un système de partage de fichiers (Intégration)</li>
+
+</ul></li>
+
+</ul>
+<aside class="notes">
+nil
+</aside>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
+</section>
+</section>
+<section>
+<section id="slide-orgafbac2b">
+<h2 id="orgafbac2b">RECIT 1</h2>
+<p>
+Une histoire d'architecture microservice&#x2026;
+</p>
+<aside class="notes">
+nil
+</aside>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
+</section>
+<section id="slide-org4df78e1">
+<h3 id="org4df78e1">CONTEXTE : ENCORE DES MICRO-SERVICES ?!?</h3>
+
+<div id="org51ef092" class="figure">
 <p><object type="image/svg+xml" data="./assets/diagram-spring-cloud.svg" class="org-svg" style="margin: auto; display: block; width: 40%;">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
 
-<div id="orgb9d887f" class="figure">
+<div id="org99b9dff" class="figure">
 <p><img src="./assets/ingress-k8s.png" alt="ingress-k8s.png" style="margin: auto; display: block; width: 40%;" />
 </p>
 </div>
@@ -69,44 +100,45 @@ Mais autant on savait faire avant avec une architecture similaire autant mainten
 </p>
 
 </aside>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orgfe0711e">
-<h3 id="orgfe0711e">SSRF OU COMMENT OUVRIR LA PORTE DE SON SI</h3>
+<section id="slide-org82cfb33">
+<h3 id="org82cfb33">PROBLEME - SSRF : OU COMMENT OUVRIR LA PORTE DE SON SI</h3>
 <p>
-SSR&#x2026; Quoi?
+SSR&#x2026; Quoi ?
+=&gt; Server-Side Request Forgery
 </p>
 
-<div id="org560c33b" class="figure">
+<div id="orga23b067" class="figure">
 <p><object type="image/svg+xml" data="./assets/example-ssrf.svg" class="fragment (appear)" style="margin: auto; display: block; width: 80%;">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orgaff0b3b">
-<h3 id="orgaff0b3b">SSRF</h3>
+<section id="slide-orgb99a9ff">
+<h3 id="orgb99a9ff">PROBLEME - SSRF : via XML External Entity</h3>
 
-<div id="orgc261ef4" class="figure">
+<div id="org706bf12" class="figure">
 <p><img src="./assets/ssrf-xxe.png" alt="ssrf-xxe.png" style="margin: auto; display: block; width: 90%;" />
 </p>
 </div>
 <aside class="notes">
 <p>
 Cette histoire commence li ya a quelques temps. ce jour la un individu se dit que ça serai une bonne idée de rajouter Sonar au projet.
-Il le rajoute et PAN c'est la déferlante! Et dans ce fatra d'annomalies il découvre des annomalies qui lui font froncer les sourcils?!?
+Il le rajoute et PAN c'est la déferlante! Et dans ce fatra d'annomalies il découvre des annomalies qui lui font froncer les sourcils ?!?
 XMLInputFactory &amp; TransformerFactory &amp; &#x2026;
 En testant il se rend compte que depuis son navigateur il est en capacité de faire des requetes depuis le serveur et donc accèder aux resources exposés sur le 127.0.0.1.
 Manque de bol, dans ces resources, on va retrouver une api exposant la configuration de l'application&#x2026;
 </p>
 
 </aside>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orgcec97c0">
-<h3 id="orgcec97c0">SSRF: COMMENT S'EN SORTIR?</h3>
+<section id="slide-orgcfcad76">
+<h3 id="orgcfcad76">PREVENTION - SSRF : COMMENT ?</h3>
 
-<div id="org946c583" class="figure">
+<div id="orgb0f037e" class="figure">
 <p><object type="image/svg+xml" data="./assets/Questions-pana.svg" class="questions">
 Sorry, your browser does not support SVG.</object>
 </p>
@@ -119,12 +151,12 @@ Après rien ne vaut une relecture humaine et une formation des equipes aux risqu
 </p>
 
 </aside>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orgaafdeff">
-<h3 id="orgaafdeff">MON SERVICE S'EST FAIT ATTAQUE!</h3>
+<section id="slide-orgb383e28">
+<h3 id="orgb383e28">PREVENTION - SSRF : ET SI MON SERVICE SE FAIT ATTAQUER ?!</h3>
 
-<div id="org97e5319" class="figure">
+<div id="org14ca9dd" class="figure">
 <p><object type="image/svg+xml" data="./assets/service-mesh.svg" class="org-svg" style="margin: auto; display: block; width: 80%;">
 Sorry, your browser does not support SVG.</object>
 </p>
@@ -136,19 +168,20 @@ Que peut-on faire pour limiter la casse? Et oui tout cassera, tout sera un jour 
 </p>
 
 </aside>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org87ea1eb">
-<h3 id="org87ea1eb">TLS? POURQUOI?</h3>
+<section id="slide-org921dcfb">
+<h3 id="org921dcfb">PREVENTION - SSRF : TLS ? POURQUOI ?</h3>
 <ul>
-<li>Limiter les interception réseau
+<li>TLS : Transport Layer Security - protocol de chiffrement de communications</li>
+<li>Limiter les interceptions au niveau du réseau
 <ul>
 <li>Récupération de secrets (LDAP, accès DB, &#x2026;)</li>
 <li>Réécriture des réponses</li>
 <li>&#x2026;</li>
 
 </ul></li>
-<li>ARP spoofing</li>
+<li>ARP spoofing (Usurpation d'IP)</li>
 <li>&#x2026;</li>
 
 </ul>
@@ -159,44 +192,56 @@ Ne pas oublier de gérer des CRLs ou un répondeur OCSP
 </p>
 
 </aside>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orgeb3729d">
-<h3 id="orgeb3729d">Limiter au maximum les droits d'un process</h3>
+<section id="slide-orgf74c16b">
+<h3 id="orgf74c16b">PREVENTION - SSRF : Limiter au maximum les droits d'un process</h3>
 <ul>
-<li>Containers (SystemD sait aussi faire des containers!)</li>
+<li>Containers (SystemD sait aussi faire des containers !)</li>
 <li>Capabilities</li>
 <li>Users unix</li>
 <li>&#x2026;</li>
 
 </ul>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org5cebabe">
-<h3 id="org5cebabe">N'OUBLIONS PAS LE DNS</h3>
+<section id="slide-orgc408956">
+<h3 id="orgc408956">PREVENTION - SSRF : N'OUBLIONS PAS LE DNS</h3>
 <ul>
+<li>DNS spoofing (Usurpation DNS)</li>
+<li>resolv.conf editable</li>
 <li>Ordre de résolution du DNS</li>
 <li>DNS de fallback</li>
 
 </ul>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org7347dbb">
-<h3 id="org7347dbb">Et ce n'est qu'un apperçu&#x2026;</h3>
+<section id="slide-orgab3eb6d">
+<h3 id="orgab3eb6d">Et ce n'est qu'un aperçu&#x2026;</h3>
 
-<div id="orgd32da34" class="figure">
+<div id="org6762b35" class="figure">
 <p><object type="image/svg+xml" data="./assets/Programming-pana.svg" class="org-svg" style="margin: auto; display: block; width: 50%;">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
 </section>
 <section>
-<section id="slide-orgeb91681">
-<h2 id="orgeb91681">DEPENDENCY HELL</h2>
+<section id="slide-org5cfabd5">
+<h2 id="org5cfabd5">RECIT 2</h2>
+<p>
+Une histoire d'implémentation de service&#x2026;
+</p>
+<aside class="notes">
+nil
+</aside>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
+</section>
+<section id="slide-org3470084">
+<h3 id="org3470084">CONTEXTE : Introduction d'une dépendance à une lib Java</h3>
 
-<div id="org05595d7" class="figure">
+<div id="orge499f1f" class="figure">
 <p><object type="image/svg+xml" data="./assets/dep-hell.svg" class="org-svg" style="margin: auto; display: block; width: 95%;">
 Sorry, your browser does not support SVG.</object>
 </p>
@@ -210,16 +255,16 @@ Qui n'a jamais eu de ClassCastException ou de MethodNotFoundException?
 </p>
 
 <p>
-Le module analysé c'est quarkus-neo4j au milleu.
+Le module analysé c'est quarkus-neo4j au milieu.
 </p>
 
 </aside>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orgb1c0d32">
-<h3 id="orgb1c0d32">DEPENDENCY HELL</h3>
+<section id="slide-org4a4f952">
+<h3 id="org4a4f952">PROBLEME - DEPENDENCY HELL</h3>
 
-<div id="org1f93473" class="figure">
+<div id="org9464f28" class="figure">
 <p><img src="./assets/quarkus-extensions.png" alt="quarkus-extensions.png" style="margin: auto; display: block; width: 70%;" />
 </p>
 </div>
@@ -229,29 +274,33 @@ Framework mis en avant pour l'écriture de nouveaux modules.
 </p>
 
 </aside>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-orge60a4a2">
-<h3 id="orge60a4a2">DEPENDENCY HELL: COMMENT S'EN SORTIR?</h3>
+<section id="slide-org86b7378">
+<h3 id="org86b7378">PREVENTION - DEPENDENCY HELL : COMMENT S'EN SORTIR ?</h3>
 
-<div id="org1afd5bc" class="figure">
+<div id="org8ca857b" class="figure">
 <p><object type="image/svg+xml" data="./assets/Questions-pana.svg" class="questions">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org35277f2">
-<h3 id="org35277f2">DEPENDENCY HELL: DES OUTILS EN JAVA</h3>
+<section id="slide-orga9728cc">
+<h3 id="orga9728cc">PREVENTION - DEPENDENCY HELL : DES OUTILS EN JAVA</h3>
 <ul>
-<li class="fragment appear">Des incontournables avec maven incontournables
+<li class="fragment appear">Des incontournables avec Maven
 <ul>
 <li>Maven Enforcer Plugin</li>
 <li>Maven Dependency Check</li>
 
 </ul></li>
 <li class="fragment appear">Des scans réguliers</li>
-<li class="fragment appear">Mais c'est aussi une éducation des équipe</li>
+<li class="fragment appear">Mais c'est aussi une éducation des équipes
+<ul>
+<li>La meilleure dépendance est celle qui n'existe pas</li>
+
+</ul></li>
 
 </ul>
 <aside class="notes">
@@ -260,19 +309,29 @@ Rajouter une dépendance c'est aussi rajouter ses dépendances.
 </p>
 
 </aside>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
 </section>
 <section>
-<section id="slide-org9edd7d2">
-<h2 id="org9edd7d2">UNE PETITE HISTOIRE DE CFT&#x2026;</h2>
+<section id="slide-orgd0ff9c1">
+<h2 id="orgd0ff9c1">RECIT 3</h2>
+<p>
+Une histoire de partage de fichiers&#x2026;
+</p>
+<aside class="notes">
+nil
+</aside>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
+</section>
+<section id="slide-org3ebbf2c">
+<h3 id="org3ebbf2c">CONTEXTE : UNE PETITE HISTOIRE DE CFT&#x2026;</h3>
 
-<div id="org50cc704" class="figure">
+<div id="orgcbd8672" class="figure">
 <p><img src="./assets/cft.png" alt="cft.png" class="fragment (appear)" />
 </p>
 </div>
 
-<div id="org059da3f" class="figure">
+<div id="org4beb5a5" class="figure">
 <p><img src="./assets/ghidra.png" alt="ghidra.png" style="margin: auto; display: block; width: 30%;" class="fragment (appear)" />
 </p>
 </div>
@@ -291,62 +350,44 @@ Il tournait avec des droits forts.
 </p>
 
 </aside>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
-<section id="slide-org72de7a4">
-<h3 id="org72de7a4">GIDRA</h3>
+<section id="slide-org14724da">
+<h3 id="org14724da">PROBLEME - L'OUTIL MAISON : GHIDRA</h3>
 
-<div id="orgeca8262" class="figure">
+<div id="org657583b" class="figure">
 <p><img src="./assets/ghidra-ihm.png" alt="ghidra-ihm.png" style="margin: auto; display: block; width: 80%;" />
 </p>
 </div>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
 </section>
 <section>
-<section id="slide-org6f108aa">
-<h2 id="org6f108aa">ALORS COMMENT NE PAS EN ARRIVER LA?</h2>
+<section id="slide-org3b1f324">
+<h2 id="org3b1f324">LECONS A EN TIRER : COMMENT NE PAS EN ARRIVER LA ?</h2>
 <ul>
-<li class="fragment appear">Former les équipes de developpement et les architectes.</li>
-<li class="fragment appear">Mettre en place de bonnes pratiques de developpement.</li>
-<li class="fragment appear">Intégrer la sécurité dans le processus de developpement.</li>
-<li class="fragment appear">Penser à la sécurité "in-depth" dés la conception de l'architecture.</li>
+<li class="fragment appear">Former les équipes de développement et les architectes.</li>
+<li class="fragment appear">Mettre en place de bonnes pratiques de développement.</li>
+<li class="fragment appear">Intégrer la sécurité dans le processus de développement.</li>
+<li class="fragment appear">Penser à la sécurité "in-depth" dès la conception de l'architecture.</li>
 <li class="fragment appear">Prendre du recul et toujours remettre en question les choix techniques sur toutes les phases d'un projet.</li>
-<li class="fragment appear">Ne pas hésiter à chalenger un besoin métier si la sécurité est en jeu!</li>
-<li class="fragment appear">Ne pas réinventer la roue!</li>
+<li class="fragment appear">Ne pas hésiter à challenger un besoin métier si la sécurité est en jeu !</li>
+<li class="fragment appear">Ne pas réinventer la roue !</li>
 
 </ul>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
-</section>
-<section id="slide-orgffcc29e">
-<h3 id="orgffcc29e">LES OUTILS MAISON</h3>
-<ul>
-<li class="fragment appear">Oui mais pas sans faire attention!</li>
-<li class="fragment appear">Oui mais en réutilisant des élements existants</li>
-<li class="fragment appear">Oui mais en connaissant le langage utilisé</li>
-<li class="fragment appear">Oui mais en réalisant des audit du code réugliers de façon automatisé mais aussi humaine</li>
-<li class="fragment appear">Oui mais uniquement si rien d'autre ne fait l'affaire!</li>
-
-</ul>
-<aside class="notes">
-<p>
-Ne pas hésiter a investir l'équipe ou les équipes a coté de soit pour s'auto-auditer
-</p>
-
-</aside>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
 </section>
 <section>
-<section id="slide-org263962f">
-<h2 id="org263962f">MERCI</h2>
+<section id="slide-orgdc8e833">
+<h2 id="orgdc8e833">MERCI</h2>
 
-<div id="orgb01976f" class="figure">
+<div id="orgd12b536" class="figure">
 <p><object type="image/svg+xml" data="./assets/Questions-pana.svg" class="questions">
 Sorry, your browser does not support SVG.</object>
 </p>
 </div>
-<div class="slide-footer"><footer class="copyright">Event BPI</footer></div>
+<div class="slide-footer"><footer class="copyright">Zenika @2022</footer></div>
 </section>
 </section>
 </div>
