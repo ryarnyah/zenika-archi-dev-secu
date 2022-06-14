@@ -78,7 +78,7 @@
    Après rien ne vaut une relecture humaine et une formation des equipes aux risques (une SSRF pouvant être une fonctionnalité voulue de l'application).
    #+END_NOTES
 ** PREVENTION - SSRF : ET SI MON SERVICE SE FAIT ATTAQUER ?!
-   #+ATTR_HTML: :style margin: auto; display: block; width: 80%;
+   #+ATTR_HTML: :style margin: auto; display: block; width: 60%;
    [[./assets/service-mesh.svg]]
    #+BEGIN_NOTES
    Mais la SSRF est loin d'etre le seul risque. Immaginous que vous avez un service qui est vulnerable et que l'attaquant arive a ouvrir une console sur celui-ci.
@@ -141,6 +141,9 @@
    * Des scans réguliers
    * Mais c'est aussi une éducation des équipes
      * La meilleure dépendance est celle qui n'existe pas
+   #+ATTR_REVEAL: :frag (appear)
+   #+ATTR_HTML: :style margin: auto; display: block; width: 40%;
+   [[./assets/dependency-track.png]]
    #+BEGIN_NOTES
    Rajouter une dépendance c'est aussi rajouter ses dépendances.
    #+END_NOTES
@@ -169,6 +172,12 @@
 ** PROBLEME - L'OUTIL MAISON : GHIDRA
    #+ATTR_HTML: :style margin: auto; display: block; width: 80%;
    [[./assets/ghidra-ihm.png]]
+** PREVENTION - L'OUTIL MAISON
+   #+ATTR_REVEAL: :frag (appear)
+   * Ne pas réinventer la roue!
+   * Utiliser des technologies maitrisés.
+   * Développer en prenant en compte des standard (RFC, etc).
+   * Faire à minima des audits externes avant toute mise en production.
 * LECONS A EN TIRER : COMMENT NE PAS EN ARRIVER LA ?
   #+ATTR_REVEAL: :frag (appear)
   * Former les équipes de développement et les architectes.
